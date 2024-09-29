@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/bootstrap.min.css" rel="stylesheet"> <!-- Локальный путь к Bootstrap CSS -->
+    <title>Домашка</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            transition: background 0.3s; /* Плавный переход фона */
+        }
+
+        /* Светлая тема */
+        body.light-theme {
+            background: linear-gradient(to right, #74ebd5, #9face6);
+            color: black; /* Цвет текста для светлой темы */
+        }
+
+        /* Темная тема */
+        body.dark-theme {
+            background: linear-gradient(to right, #1a1a1a, #3a3a3a);
+            color: white; /* Цвет текста для темной темы */
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #333;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            color: white;
+        }
+
+        .menu-header {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .white-line {
+            height: 2px;
+            background-color: white;
+            margin-bottom: 10px;
+        }
+
+        .menu {
+            list-style: none;
+            margin-top: 0;
+        }
+
+        .menu li {
+            margin-bottom: 10px;
+        }
+
+        .menu li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            transition: background 0.3s;
+        }
+
+        .menu li a:hover {
+            background-color: #444;
+        }
+
+        .menu li a.active {
+            background-color: blue;
+        }
+
+        .user-section {
+            text-align: center;
+            position: relative;
+            margin-top: auto;
+        }
+
+        #user-btn {
+            background-color: #444;
+            border: none;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        .user-menu {
+            display: none;
+            position: absolute;
+            bottom: 50px;
+            left: 0;
+            background-color: #444;
+            width: 100%;
+            padding: 10px 0;
+        }
+
+        .user-menu a {
+            color: white;
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .user-menu a:hover {
+            background-color: #555;
+        }
+
+        .content {
+            flex: 1; /* Занимает оставшееся пространство */
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center; /* Выравнивание заголовка по центру */
+            margin-bottom: 20px; /* Отступ снизу для улучшения внешнего вида */
+        }
+
+        p {
+            text-align: center; /* Выравнивание текста по центру */
+            margin-bottom: 20px; /* Отступ снизу для улучшения внешнего вида */
+        }
+
+        .product-columns, .order-columns {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .product, .order, .category {
+            background-color: #f4f4f4;
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 30%; /* Каждая колонка занимает 30% ширины */
+            text-align: center;
+        }
+
+        /* Изменение цвета фона для темной темы */
+        body.dark-theme .product,
+        body.dark-theme .order,
+        body.dark-theme .category {
+            background-color: #444; /* Фон для карточек в темной теме */
+            color: white; /* Цвет текста для карточек в темной теме */
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .contact-form input, .contact-form textarea {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .contact-form button {
+            padding: 10px 20px;
+            border: none;
+            background-color: blue;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .contact-form button:hover {
+            background-color: darkblue;
+        }
+
+        .profile-info {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .theme-toggle {
+            margin-top: 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body class="light-theme">
+    <div class="sidebar">
+        <div class="menu-header">Меню</div>
+        <div class="white-line"></div>
+        <ul class="menu">
+            <li><a href="#" class="menu-item active" data-content="home">🏠 Главная</a></li>
+            <li><a href="#" class="menu-item" data-content="categories">📂 Категории</a></li>
+            <li><a href="#" class="menu-item" data-content="orders">📦 Заказы</a></li>
+            <li><a href="#" class="menu-item" data-content="contacts">📞 Контакты</a></li>
+        </ul>
+        <div class="user-section">
+            <button id="user-btn">👤 Пользователь</button>
+            <div class="user-menu" id="user-menu">
+                <a href="#" class="menu-item" data-content="profile">👤 Профиль</a>
+                <a href="#">🚪 Выход</a>
+            </div>
+        </div>
+        <button class="theme-toggle">🌙 Темная тема</button>
+    </div>
+
+    <div class="content" id="content">
+        <h1>Главная</h1>
+        <p>Вы находитесь на сайте, предназначенном для продажи товаров.</p>
+        <div class="product-columns">
+            <div class="product">Товар 1</div>
+            <div class="product">Товар 2</div>
+            <div class="product">Товар 3</div>
+        </div>
+    </div>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script>
+        const menuItems = document.querySelectorAll('.menu-item');
+        const content = document.getElementById('content');
+        const userBtn = document.getElementById('user-btn');
+        const userMenu = document.getElementById('user-menu');
+        const themeToggle = document.querySelector('.theme-toggle');
+
+        const contentData = {
+            home: `
+                <h1>Главная</h1>
+                <p>Вы находитесь на сайте, предназначенном для продажи товаров.</p>
+                <div class="product-columns">
+                    <div class="product">Товар 1</div>
+                    <div class="product">Товар 2</div>
+                    <div class="product">Товар 3</div>
+                </div>
+            `,
+            categories: `
+                <h1>Категории</h1>
+                <div class="product-columns">
+                    <div class="category">Категория 1 - 100₽</div>
+                    <div class="category">Категория 2 - 200₽</div>
+                    <div class="category">Категория 3 - 300₽</div>
+                </div>
+            `,
+            orders: `
+                <h1>Заказы</h1>
+                <div class="order-columns">
+                    <div class="order">Заказ 1</div>
+                    <div class="order">Заказ 2</div>
+                    <div class="order">Заказ 3</div>
+                </div>
+            `,
+            contacts: `
+                <h1>Контакты</h1>
+                <div class="contact-info">
+                    <p>Телефон: +7 (123) 456-78-90</p>
+                    <p>Адрес: г. Москва, ул. Примерная, д. 1</p>
+                    <p>Почта: example@example.com</p>
+                    <p>Сайт: www.example.com</p>
+                </div>
+                <form class="contact-form" onsubmit="sendContact(event)">
+                    <input type="text" placeholder="Имя" required>
+                    <input type="email" placeholder="Почта" required>
+                    <textarea placeholder="Сообщение" required></textarea>
+                    <button type="submit">Отправить</button>
+                </form>
+            `,
+            profile: `
+                <h1>Профиль пользователя</h1>
+                <div class="profile-info">
+                    <p>Имя: Пользователь</p>
+                    <p>Электронная почта: example@example.com</p>
+                </div>
+            `,
+        };
+
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const contentType = item.getAttribute('data-content');
+                content.innerHTML = contentData[contentType];
+                menuItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                userMenu.style.display = 'none'; // Скрыть меню пользователя
+            });
+        });
+
+        userBtn.addEventListener('click', () => {
+            const isVisible = userMenu.style.display === 'block';
+            userMenu.style.display = isVisible ? 'none' : 'block';
+        });
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            document.body.classList.toggle('light-theme');
+        });
+
+        function sendContact(event) {
+            event.preventDefault();
+            alert('Сообщение отправлено!');
+        }
+    </script>
+</body>
+</html>
